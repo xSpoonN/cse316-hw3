@@ -24,9 +24,18 @@ const QuestionSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Answer'
   }],
-  asked_by: String,
-  ask_date_time: Date,
-  views: Number,
+  asked_by: {
+    type: String,
+    default: 'Anonymous'
+  },
+  ask_date_time: {
+    type: Date,
+    default: Date.now
+  },
+  views: {
+    type: Number,
+    default: 0
+  },
   url: String
 })
 /* const SomeModel =  */mongoose.model('Question', QuestionSchema)

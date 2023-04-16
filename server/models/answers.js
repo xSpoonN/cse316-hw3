@@ -10,7 +10,10 @@ const AnswerSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  ans_date_time: Date,
+  ans_date_time: {
+    type: Date,
+    default: Date.now
+  },
   url: String
 })
 module.exports = mongoose.model('Answer', AnswerSchema)
