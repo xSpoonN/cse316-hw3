@@ -38,4 +38,4 @@ const QuestionSchema = new mongoose.Schema({
   },
   url: String
 })
-/* const SomeModel =  */mongoose.model('Question', QuestionSchema)
+module.exports = mongoose.model('Question', QuestionSchema)
