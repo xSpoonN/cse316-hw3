@@ -7,11 +7,18 @@ const Tag = require('./tags')
 const Answer = require('./answers')
 // Define a schema
 const QuestionSchema = new mongoose.Schema({
-  title: String,
-  text: String,
+  title: {
+    type: String,
+    required: true
+  },
+  text: {
+    type: String,
+    required: true
+  },
   tags: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Tag'
+    ref: 'Tag',
+    required: true
   }],
   answers: [{
     type: mongoose.Schema.Types.ObjectId,

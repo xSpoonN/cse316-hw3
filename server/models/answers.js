@@ -2,8 +2,14 @@
 const mongoose = require('mongoose')
 // Define a schema
 const AnswerSchema = new mongoose.Schema({
-  text: String,
-  ans_by: String,
+  text: {
+    type: String,
+    required: true
+  },
+  ans_by: {
+    type: String,
+    required: true
+  },
   ans_date_time: Date,
   url: String
 })
