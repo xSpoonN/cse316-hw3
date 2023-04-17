@@ -50,7 +50,7 @@ Question.propTypes = {
 
 function getTagName (tagId) {
   return axios.get(`http://localhost:8000/tags/${tagId}`).then((response) => {
-    console.log(response.data.name)
+    /* console.log(response.data.name) */
     return response.data
   }).catch((e) => {
     console.error(e)
@@ -59,7 +59,7 @@ function getTagName (tagId) {
 
 function getTags () {
   return axios.get('http://localhost:8000/tags').then((response) => {
-    console.log(response.data)
+    /* console.log(response.data) */
     return response.data
   }).catch((e) => {
     console.error(e)
@@ -68,7 +68,7 @@ function getTags () {
 
 function getQuestions () {
   return axios.get('http://localhost:8000/questions').then((response) => {
-    console.log(response.data)
+    /* console.log(response.data) */
     return response.data
   }).catch((e) => {
     console.error(e)
@@ -77,7 +77,7 @@ function getQuestions () {
 
 function getAnswers () {
   return axios.get('http://localhost:8000/answers').then((response) => {
-    console.log(response.data)
+    /* console.log(response.data) */
     return response.data
   }).catch((e) => {
     console.error(e)
@@ -132,7 +132,7 @@ export default function Questions ({ searchQuery, fun }) {
   useEffect(() => {
     async function fetchQuestions (qList) {
       if (!qList) qList = await getQuestions()
-      console.log(qList)
+      /* console.log(qList) */
       /* Sort Options */
       if (searchQuery) qList = search(searchQuery)
       if (sortOrder === 'Newest' || sortOrder === 'Unanswered') {
@@ -167,20 +167,21 @@ export default function Questions ({ searchQuery, fun }) {
     fetchQuestions()
   }, [sortOrder])
 
-  function compareActive (a, b) {
+  async function compareActive (a, b) {
     let aLatest = 0
     let bLatest = 0
-    const ans = getAnswers()
-    for (let i = 0; i < a.ansIds.length; i++) { // Finds the latest answer
-      const answe = ans.find((x) => x.aid === a.ansIds[i])
-      if (!aLatest || answe.ansDate > aLatest) {
-        aLatest = answe.ansDate
+    const ans = await getAnswers()
+    console.log(ans)
+    for (let i = 0; i < a.answers.length; i++) { // Finds the latest answer
+      const answe = ans.find((x) => x._id === a.answers[i])
+      if (!aLatest || new Date(answe.ans_date_time) > aLatest) {
+        aLatest = new Date(answe.ans_date_time)
       }
     }
-    for (let i = 0; i < b.ansIds.length; i++) { // Finds the latest answer
-      const answe = ans.find((x) => x.aid === b.ansIds[i])
-      if (!bLatest || answe.ansDate > bLatest) {
-        bLatest = answe.ansDate
+    for (let i = 0; i < b.answers.length; i++) { // Finds the latest answer
+      const answe = ans.find((x) => x._id === b.answers[i])
+      if (!bLatest || new Date(answe.ans_date_time) > bLatest) {
+        bLatest = new Date(answe.ans_date_time)
       }
     }
     return bLatest - aLatest
