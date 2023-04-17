@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-function getTagName (tagId) {
+export function getTagName (tagId) {
   return axios.get(`http://localhost:8000/tags/${tagId}`).then((response) => {
     console.log(response.data.name)
     return response.data
@@ -9,7 +9,7 @@ function getTagName (tagId) {
   })
 }
 
-function getQuestions () {
+export function getQuestions () {
   return axios.get('http://localhost:8000/questions').then((response) => {
     console.log(response.data)
     return response.data
@@ -18,7 +18,25 @@ function getQuestions () {
   })
 }
 
-function formatDate (askDate, now = new Date()) {
+export function getAnswers () {
+  return axios.get('http://localhost:8000/answers').then((response) => {
+    console.log(response.data)
+    return response.data
+  }).catch((e) => {
+    console.error(e)
+  })
+}
+
+export function getTags () {
+  return axios.get('http://localhost:8000/tags').then((response) => {
+    console.log(response.data)
+    return response.data
+  }).catch((e) => {
+    console.error(e)
+  })
+}
+
+export function formatDate (askDate, now = new Date()) {
   const timeDiffInSeconds = (now.getTime() - askDate.getTime()) / 1000
   const timeDiffInMinutes = timeDiffInSeconds / 60
   const timeDiffInHours = timeDiffInMinutes / 60
