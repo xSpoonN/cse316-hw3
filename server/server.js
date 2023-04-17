@@ -8,6 +8,15 @@ const Questions = require('./models/questions')
 // Create a new Express app
 const app = express()
 
+app.use(function (req, res, next) {
+  res.header('Access-Control-Allow-Origin', 'http://localhost:3000')
+  res.header(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept'
+  )
+  next()
+})
+
 // Set up a route for the root URL
 app.get('/', (req, res) => {
   res.send('Hello, world!')
