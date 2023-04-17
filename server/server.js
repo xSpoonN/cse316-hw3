@@ -33,6 +33,15 @@ app.get('/questions', async (req, res) => {
   }
 })
 
+app.get('/answers', async (req, res) => {
+  try {
+    const posts = await Answers.find()
+    res.json(posts)
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+})
+
 app.get('/tags/:tagId', async (req, res) => {
   try {
     const tag = await Tags.findById(req.params.tagId)
