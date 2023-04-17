@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+const modle = require('../models/axiosmodel.js')
 
 export default function AllTags ({ setSearchQuery }) {
   const tags = modle.getAllTags().map((item, index) => {

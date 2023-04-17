@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import '../stylesheets/questions.css'
 import '../stylesheets/fakeStackOverflow.css'
-const Model = require('../models/axiosmodel.js')
+const modle = require('../models/axiosmodel.js')
 /* import { showAnswers } from './answers.js' */
 /* import { addTagLink } from './alltags.js' */
 
@@ -26,12 +26,12 @@ export function Question ({ qid, answers, views, title, tagList, askedBy, date, 
         <br/>
         {tagList.map((tag) => (
           <button key={tag} className="qtag" /* onClick={addTagLink(tag, modle.findTagName(tag))} */>
-            {Model.getTagName(tag).name}
+            {modle.getTagName(tag).name}
           </button>
         ))}
       </td>
 
-      <td className="qTD"><b>{askedBy}</b> {`asked ${Model.formatDate(date)}`}</td>
+      <td className="qTD"><b>{askedBy}</b> {`asked ${modle.formatDate(date)}`}</td>
     </tr>
   )
 }
@@ -53,8 +53,8 @@ export default function Questions ({ searchQuery, fun }) {
   const [qCount, setQCount] = useState(0)
 
   async function search (query, q, t) {
-    if (!q) q = await Model.getQuestions()
-    if (!t) t = await Model.getTags()
+    if (!q) q = await modle.getQuestions()
+    if (!t) t = await modle.getTags()
     let searchTerms = query.toLowerCase().split(' ')
     let changed = false
     do {
@@ -93,7 +93,7 @@ export default function Questions ({ searchQuery, fun }) {
 
   useEffect(() => {
     async function fetchQuestions (qList) {
-      if (!qList) qList = await Model.getQuestions()
+      if (!qList) qList = await modle.getQuestions()
       /* console.log(qList) */
       /* Sort Options */
       if (searchQuery) qList = search(searchQuery)
@@ -132,7 +132,7 @@ export default function Questions ({ searchQuery, fun }) {
   async function compareActive (a, b) {
     let aLatest = 0
     let bLatest = 0
-    const ans = await Model.getAnswers()
+    const ans = await modle.getAnswers()
     console.log(ans)
     for (let i = 0; i < a.answers.length; i++) { // Finds the latest answer
       const answe = ans.find((x) => x._id === a.answers[i])

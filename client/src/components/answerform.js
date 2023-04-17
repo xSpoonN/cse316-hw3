@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import '../stylesheets/answerform.css' /* I'm not sure if this line even matters but why not ig */
 import { validateLinks } from './questionform'
+const modle = require('../models/axiosmodel.js')
 
 export default function AnswerForm ({ setActivePage, qid }) {
   const [user, setUser] = useState('')
