@@ -4,6 +4,8 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const Questions = require('./models/questions')
+const Answers = require('./models/answers') // eslint-disable-line no-unused-vars
+const Tags = require('./models/tags')
 
 // Create a new Express app
 const app = express()
@@ -26,6 +28,24 @@ app.get('/questions', async (req, res) => {
   try {
     const posts = await Questions.find()
     res.json(posts)
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+})
+
+app.get('/tags/:tagId', async (req, res) => {
+  try {
+    const tag = await Tags.findById(req.params.tagId)
+    res.json(tag)
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+})
+
+app.get('/tags', async (req, res) => {
+  try {
+    const tags = await Tags.find()
+    res.json(tags)
   } catch (err) {
     res.status(500).json({ message: err.message })
   }

@@ -27,7 +27,7 @@ export function Question ({ qid, answers, views, title, tagList, askedBy, date, 
         <br/>
         {tagList.map((tag) => (
           <button key={tag} className="qtag" /* onClick={addTagLink(tag, modle.findTagName(tag))} */>
-            {modle.findTagName(tag)}
+            {getTagName(tag).name}
           </button>
         ))}
       </td>
@@ -46,6 +46,24 @@ Question.propTypes = {
   date: PropTypes.instanceOf(Date).isRequired,
   unans: PropTypes.bool.isRequired,
   setActivePage: PropTypes.func.isRequired
+}
+
+function getTagName (tagId) {
+  return axios.get(`http://localhost:8000/tags/${tagId}`).then((response) => {
+    console.log(response.data.name)
+    return response.data
+  }).catch((e) => {
+    console.error(e)
+  })
+}
+
+function getQuestions () {
+  return axios.get('http://localhost:8000/questions').then((response) => {
+    console.log(response.data)
+    return response.data
+  }).catch((e) => {
+    console.error(e)
+  })
 }
 
 export default function Questions ({ searchQuery, fun }) {
@@ -91,24 +109,10 @@ export default function Questions ({ searchQuery, fun }) {
   }
 
   useEffect(() => {
-    function fetchQuestions (qList = modle.getAllQstns()) {
+    async function fetchQuestions (qList) {
+      if (!qList) qList = await getQuestions()
+      console.log(qList)
       /* Sort Options */
-      axios.get('http://localhost:8000/questions').then((response) => {
-        /* const posts = response.data;
-        console.log(posts); */
-        console.log(response);
-      }).catch((e) => {
-        console.error(e);
-      })
-
-/*       try {
-        const response = await axios.get('http://localhost:8000/questions')
-        const posts = response.data;
-        console.log(posts);
-      } catch (e) {
-        console.error(e);
-      } */
-
       if (searchQuery) qList = search(searchQuery)
       if (sortOrder === 'Newest' || sortOrder === 'Unanswered') {
         qList = qList.sort((a, b) => (b.askDate > a.askDate) ? -1 : 1); qList.reverse()
@@ -116,18 +120,19 @@ export default function Questions ({ searchQuery, fun }) {
         qList.sort(compareActive)
       }
 
-      const qL = qList.map(({ qid, ansIds, views, title, tagIds, askedBy, askDate }) => {
-        if (sortOrder === 'Unanswered' && ansIds.length) return undefined
+      // eslint-disable-next-line camelcase
+      const qL = qList.map(({ _id, answers, views, title, tags, asked_by, ask_date_time }) => {
+        if (sortOrder === 'Unanswered' && answers.length) return undefined
         return (
           <Question
-            qid={qid}
-            answers={ansIds.length}
+            qid={_id}
+            answers={answers.length}
             views={views}
             title={title}
-            tagList={tagIds}
-            askedBy={askedBy}
-            date={askDate}
-            key={qid}
+            tagList={tags}
+            askedBy={asked_by} // eslint-disable-line camelcase
+            date={new Date(ask_date_time)} // eslint-disable-line camelcase
+            key={_id}
             unans={sortOrder === 'Unanswered'}
             setActivePage={fun}
           />
