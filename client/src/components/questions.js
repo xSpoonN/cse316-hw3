@@ -47,30 +47,12 @@ Question.propTypes = {
   setActivePage: PropTypes.func.isRequired
 }
 
-function getTagName (tagId) {
-  return axios.get(`http://localhost:8000/tags/${tagId}`).then((response) => {
-    console.log(response.data.name)
-    return response.data
-  }).catch((e) => {
-    console.error(e)
-  })
-}
-
-function getQuestions () {
-  return axios.get('http://localhost:8000/questions').then((response) => {
-    console.log(response.data)
-    return response.data
-  }).catch((e) => {
-    console.error(e)
-  })
-}
-
 export default function Questions ({ searchQuery, fun }) {
   const [sortOrder, setSortOrder] = useState('Newest')
   const [questionList, setQuestionList] = useState([])
   const [qCount, setQCount] = useState(0)
 
-  function search (query, q = modle.getAllQstns(), t = modle.getAllTags()) {
+  function search (query, q = getQuestions(), t = modle.getAllTags()) {
     let searchTerms = query.toLowerCase().split(' ')
     let changed = false
     do {

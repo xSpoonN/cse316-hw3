@@ -1,7 +1,5 @@
 import axios from 'axios'
 
-
-
 function getTagName (tagId) {
   return axios.get(`http://localhost:8000/tags/${tagId}`).then((response) => {
     console.log(response.data.name)
