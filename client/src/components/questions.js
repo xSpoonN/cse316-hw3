@@ -7,9 +7,21 @@ const modle = require('../models/axiosmodel.js')
 /* import { addTagLink } from './alltags.js' */
 
 export function Question ({ qid, answers, views, title, tagList, askedBy, date, unans, setActivePage }) {
+  const [tagNames, setTagNames] = useState([])
   const setPage = (qid) => () => {
     setActivePage(qid)
   }
+
+  useEffect(() => {
+    async function fetchTagNames () {
+      const names = await Promise.all(tagList.map(async (tag) => {
+        const name = await modle.getTagName(tag)
+        return name
+      }))
+      setTagNames(names)
+    }
+    fetchTagNames()
+  }, [tagList])
 
   if (unans && answers) return undefined
   return (
@@ -24,9 +36,9 @@ export function Question ({ qid, answers, views, title, tagList, askedBy, date, 
           {title}
         </a>
         <br/>
-        {tagList.map((tag) => (
-          <button key={tag} className="qtag" /* onClick={addTagLink(tag, modle.findTagName(tag))} */>
-            {modle.getTagName(tag).name}
+        {tagNames.map((name, i) => (
+          <button key={tagList[i]} className="qtag">
+            {name}
           </button>
         ))}
       </td>
@@ -82,8 +94,8 @@ export default function Questions ({ searchQuery, fun }) {
           q[i].title.toLowerCase().includes(term) || /* Title includes a search term */
           q[i].text.toLowerCase().includes(term) /* Description includes the search term */
         ) || !searchWords.length) /* Or there are no search words */ && /* AND */
-        (q[i].tagIds.some((tag) =>
-          searchTags.some((term) => term === t.find((x) => x.tid === tag).name) /* Tag name matches a search tag */
+        (q[i].tags.some((tag) =>
+          searchTags.some((term) => term === t.find((x) => x._id === tag).name) /* Tag name matches a search tag */
         ) || !searchTags.length) /* Or there are no search tags */
       ) out.push(q[i])
     }

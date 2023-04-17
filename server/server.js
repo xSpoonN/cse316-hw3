@@ -33,6 +33,31 @@ app.get('/questions', async (req, res) => {
   }
 })
 
+app.post('/questions', async (req, res) => {
+  const question = new Questions({
+    title: req.body.title,
+    body: req.body.text,
+    tags: req.body.tags,
+    asked_by: req.body.user,
+    ask_date_time: Date.now
+  })
+  try {
+    const newQuestion = await question.save()
+    res.status(201).json(newQuestion)
+  } catch (err) {
+    res.status(400).json({ message: err.message })
+  }
+})
+
+app.get('/question/:questionId', async (req, res) => {
+  try {
+    const question = await Questions.findById(req.params.questionId)
+    res.json(question)
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+})
+
 app.get('/tags/:tagId', async (req, res) => {
   try {
     const tag = await Tags.findById(req.params.tagId)
@@ -48,6 +73,18 @@ app.get('/tags', async (req, res) => {
     res.json(tags)
   } catch (err) {
     res.status(500).json({ message: err.message })
+  }
+})
+
+app.post('/tags', async (req, res) => {
+  const tag = new Tags({
+    name: req.body.name
+  })
+  try {
+    const newTag = await tag.save()
+    res.status(201).json(newTag)
+  } catch (err) {
+    res.status(400).json({ message: err.message })
   }
 })
 

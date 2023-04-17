@@ -1,12 +1,14 @@
 import axios from 'axios'
 
-export function getTagName (tagId) {
-  return axios.get(`http://localhost:8000/tags/${tagId}`).then((response) => {
+export async function getTagName (tagId) {
+  const resp = await axios.get(`http://localhost:8000/tags/${tagId}`)
+  return resp.data.name
+  /* return axios.get(`http://localhost:8000/tags/${tagId}`).then((response) => {
     console.log(response.data.name)
     return response.data
   }).catch((e) => {
     console.error(e)
-  })
+  }) */
 }
 
 export function getQuestions () {
@@ -29,6 +31,40 @@ export function getAnswers () {
 
 export function getTags () {
   return axios.get('http://localhost:8000/tags').then((response) => {
+    console.log(response.data)
+    return response.data
+  }).catch((e) => {
+    console.error(e)
+  })
+}
+
+export function tagExists (tag) {
+  return axios.get(`http://localhost:8000/tags/${tag}`).then((response) => {
+    console.log(response.data)
+    return response.data
+  }).catch((e) => {
+    console.error(e); return false
+  })
+}
+
+export function addTag (tag) {
+  return axios.post('http://localhost:8000/tags', {
+    name: tag
+  }).then((response) => {
+    console.log(response.data)
+    return response.data
+  }).catch((e) => {
+    console.error(e)
+  })
+}
+
+export function addQuestion (title, text, tags, user) {
+  return axios.post('http://localhost:8000/questions', {
+    title,
+    text,
+    tags,
+    user
+  }).then((response) => {
     console.log(response.data)
     return response.data
   }).catch((e) => {
