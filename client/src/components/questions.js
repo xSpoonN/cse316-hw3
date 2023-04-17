@@ -110,9 +110,9 @@ export default function Questions ({ searchQuery, fun }) {
       /* Sort Options */
       if (searchQuery) qList = search(searchQuery)
       if (sortOrder === 'Newest' || sortOrder === 'Unanswered') {
-        qList = qList.sort((a, b) => (b.askDate > a.askDate) ? -1 : 1); qList.reverse()
+        qList = qList.sort((a, b) => (new Date(b.ask_date_time) > new Date(a.ask_date_time)) ? -1 : 1); qList.reverse()
       } else if (sortOrder === 'Active') {
-        qList.sort(compareActive)
+        await qList.sort(compareActive)
       }
 
       // eslint-disable-next-line camelcase

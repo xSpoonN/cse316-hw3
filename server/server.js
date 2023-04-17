@@ -88,6 +88,15 @@ app.post('/tags', async (req, res) => {
   }
 })
 
+app.get('/answers', async (req, res) => {
+  try {
+    const answers = await Answers.find()
+    res.json(answers)
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+})
+
 // Connect to the database
 mongoose.connect('mongodb://127.0.0.1:27017/fake_so')
 const db = mongoose.connection
