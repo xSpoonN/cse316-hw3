@@ -11,6 +11,18 @@ export async function getTagName (tagId) {
   }) */
 }
 
+export async function getAnswerCount (qid) {
+  const resp = await axios.get(`http://localhost:8000/questions/${qid}`)
+  console.log(resp.data.answers.length)
+  return resp.data.answers.length
+  /* return axios.get(`http://localhost:8000/questions/${qid}`).then((response) => {
+    console.log(response.data.answers.length)
+    return response.data.answers.length
+  }).catch((e) => {
+    console.error(e)
+  }) */
+}
+
 export function getQuestions () {
   return axios.get('http://localhost:8000/questions').then((response) => {
     console.log(response.data)

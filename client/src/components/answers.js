@@ -1,8 +1,19 @@
-import React from 'react'
+import { React, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 const modle = require('../models/axiosmodel.js')
 
 export default function Answers ({ qid, gotoPostAnswerPage }) {
+  const [answerCount, setAnswerCount] = useState([])
+
+  useEffect(() => {
+    async function fetchAnswers () {
+      const ac = await modle.getAnswerCount(qid)
+      console.log(ac)
+      setAnswerCount(ac)
+    }
+    fetchAnswers()
+  }, [qid])
+
   const answers = modle.getAnswersByQID(qid).map((item) => {
     return <Answer key={item.aid} answer={item} />
   })
@@ -13,7 +24,7 @@ export default function Answers ({ qid, gotoPostAnswerPage }) {
 
   return (
     <>
-    <p id="ap_answercount"><b>{modle.getQuestionCount(qid)} answers</b></p>
+    <p id="ap_answercount"><b>{answerCount} answers</b></p>
     <p id="ap_questiontitle"><b>{modle.getQuestionTitle(qid)}</b></p>
     <br />
     <p id="ap_views"><b>{modle.getViews(qid)} views</b></p>
