@@ -3,9 +3,7 @@
 // This is where you should start writing server-side code for this application.
 const express = require('express')
 const mongoose = require('mongoose')
-/* const AnswerSchema = require('./models/answers')
-const QuestionSchema = require('./models/questions')
-const TagSchema = require('./models/tags') */
+const Questions = require('./models/questions')
 
 // Create a new Express app
 const app = express()
@@ -13,6 +11,15 @@ const app = express()
 // Set up a route for the root URL
 app.get('/', (req, res) => {
   res.send('Hello, world!')
+})
+
+app.get('/questions', async (req, res) => {
+  try {
+    const posts = await Questions.find()
+    res.json(posts)
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
 })
 
 // Connect to the database

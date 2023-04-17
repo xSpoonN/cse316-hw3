@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { modle } from '../App.js'
+import axios from 'axios'
 import '../stylesheets/questions.css'
 import '../stylesheets/fakeStackOverflow.css'
 /* import { showAnswers } from './answers.js' */
@@ -92,6 +93,22 @@ export default function Questions ({ searchQuery, fun }) {
   useEffect(() => {
     function fetchQuestions (qList = modle.getAllQstns()) {
       /* Sort Options */
+      axios.get('http://localhost:8000/questions').then((response) => {
+        /* const posts = response.data;
+        console.log(posts); */
+        console.log(response);
+      }).catch((e) => {
+        console.error(e);
+      })
+
+/*       try {
+        const response = await axios.get('http://localhost:8000/questions')
+        const posts = response.data;
+        console.log(posts);
+      } catch (e) {
+        console.error(e);
+      } */
+
       if (searchQuery) qList = search(searchQuery)
       if (sortOrder === 'Newest' || sortOrder === 'Unanswered') {
         qList = qList.sort((a, b) => (b.askDate > a.askDate) ? -1 : 1); qList.reverse()
