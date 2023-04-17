@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { modle } from '../App.js'
 
 export default function AllTags ({ setSearchQuery }) {
   const tags = modle.getAllTags().map((item, index) => {

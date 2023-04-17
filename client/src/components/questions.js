@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { modle } from '../App.js'
-import axios from 'axios'
 import '../stylesheets/questions.css'
 import '../stylesheets/fakeStackOverflow.css'
+import { getQuestions, getTagName, formatDate } from '../models/axiosmodel.js'
 /* import { showAnswers } from './answers.js' */
 /* import { addTagLink } from './alltags.js' */
 
@@ -32,7 +31,7 @@ export function Question ({ qid, answers, views, title, tagList, askedBy, date, 
         ))}
       </td>
 
-      <td className="qTD"><b>{askedBy}</b> {`asked ${modle.formatDate(date)}`}</td>
+      <td className="qTD"><b>{askedBy}</b> {`asked ${formatDate(date)}`}</td>
     </tr>
   )
 }
@@ -48,51 +47,12 @@ Question.propTypes = {
   setActivePage: PropTypes.func.isRequired
 }
 
-function getTagName (tagId) {
-  return axios.get(`http://localhost:8000/tags/${tagId}`).then((response) => {
-    /* console.log(response.data.name) */
-    return response.data
-  }).catch((e) => {
-    console.error(e)
-  })
-}
-
-function getTags () {
-  return axios.get('http://localhost:8000/tags').then((response) => {
-    /* console.log(response.data) */
-    return response.data
-  }).catch((e) => {
-    console.error(e)
-  })
-}
-
-function getQuestions () {
-  return axios.get('http://localhost:8000/questions').then((response) => {
-    /* console.log(response.data) */
-    return response.data
-  }).catch((e) => {
-    console.error(e)
-  })
-}
-
-function getAnswers () {
-  return axios.get('http://localhost:8000/answers').then((response) => {
-    /* console.log(response.data) */
-    return response.data
-  }).catch((e) => {
-    console.error(e)
-  })
-}
-
 export default function Questions ({ searchQuery, fun }) {
   const [sortOrder, setSortOrder] = useState('Newest')
   const [questionList, setQuestionList] = useState([])
   const [qCount, setQCount] = useState(0)
 
-  function search (query, q, t) {
-    if (!q) q = getQuestions()
-    if (!t) t = getTags()
-
+  function search (query, q = getQuestions(), t = modle.getAllTags()) {
     let searchTerms = query.toLowerCase().split(' ')
     let changed = false
     do {
