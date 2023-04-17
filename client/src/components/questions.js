@@ -57,8 +57,26 @@ function getTagName (tagId) {
   })
 }
 
+function getTags () {
+  return axios.get('http://localhost:8000/tags').then((response) => {
+    console.log(response.data)
+    return response.data
+  }).catch((e) => {
+    console.error(e)
+  })
+}
+
 function getQuestions () {
   return axios.get('http://localhost:8000/questions').then((response) => {
+    console.log(response.data)
+    return response.data
+  }).catch((e) => {
+    console.error(e)
+  })
+}
+
+function getAnswers () {
+  return axios.get('http://localhost:8000/answers').then((response) => {
     console.log(response.data)
     return response.data
   }).catch((e) => {
@@ -71,7 +89,10 @@ export default function Questions ({ searchQuery, fun }) {
   const [questionList, setQuestionList] = useState([])
   const [qCount, setQCount] = useState(0)
 
-  function search (query, q = modle.getAllQstns(), t = modle.getAllTags()) {
+  function search (query, q, t) {
+    if (!q) q = getQuestions()
+    if (!t) t = getTags()
+
     let searchTerms = query.toLowerCase().split(' ')
     let changed = false
     do {
@@ -149,7 +170,7 @@ export default function Questions ({ searchQuery, fun }) {
   function compareActive (a, b) {
     let aLatest = 0
     let bLatest = 0
-    const ans = modle.getAllAnswers()
+    const ans = getAnswers()
     for (let i = 0; i < a.ansIds.length; i++) { // Finds the latest answer
       const answe = ans.find((x) => x.aid === a.ansIds[i])
       if (!aLatest || answe.ansDate > aLatest) {
