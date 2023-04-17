@@ -130,7 +130,7 @@ export default function Questions ({ searchQuery, fun }) {
   function compareActive (a, b) {
     let aLatest = 0
     let bLatest = 0
-    const ans = getAnswers()
+    const ans = modle.getAllAnswers()
     for (let i = 0; i < a.ansIds.length; i++) { // Finds the latest answer
       const answe = ans.find((x) => x.aid === a.ansIds[i])
       if (!aLatest || answe.ansDate > aLatest) {
