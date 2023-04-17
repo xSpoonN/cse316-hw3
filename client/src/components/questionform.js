@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import { modle } from '../App.js'
 
 export function validateLinks (text) {
   const matches = text.match(/\[(.*?)\]\((.*?)\)/g)

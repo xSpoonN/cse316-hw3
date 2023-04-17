@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import '../stylesheets/answerform.css' /* I'm not sure if this line even matters but why not ig */
-import { modle } from '../App.js'
 import { validateLinks } from './questionform'
 
 export default function AnswerForm ({ setActivePage, qid }) {

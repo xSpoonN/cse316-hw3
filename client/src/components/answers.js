@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { modle } from '../App.js'
 
 export default function Answers ({ qid, gotoPostAnswerPage }) {
   const answers = modle.getAnswersByQID(qid).map((item) => {
