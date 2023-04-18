@@ -23,6 +23,7 @@ export function Question ({ qid, answers, views, title, tagList, askedBy, date, 
     fetchTagNames()
   }, [tagList])
 
+  // potentially, setPage(qid), qid is a promise.
   if (unans && answers) return undefined
   return (
     <tr className="qRow">
@@ -105,7 +106,7 @@ export default function Questions ({ searchQuery, fun }) {
 
   useEffect(() => {
     async function fetchQuestions (qList) {
-      if (!qList) qList = await modle.getQuestions()
+      if (!qList) qList = await modle.getQuestions() // is this line causing the problem?
       /* console.log(qList) */
       /* Sort Options */
       if (searchQuery) qList = search(searchQuery)
@@ -118,6 +119,7 @@ export default function Questions ({ searchQuery, fun }) {
       // eslint-disable-next-line camelcase
       const qL = qList.map(({ _id, answers, views, title, tags, asked_by, ask_date_time }) => {
         if (sortOrder === 'Unanswered' && answers.length) return undefined
+        // it might be happening here!
         return (
           <Question
             qid={_id}

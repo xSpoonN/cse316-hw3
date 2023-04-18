@@ -20,10 +20,42 @@ export async function getQuestionTitle (qid) {
   return resp.data.title
 }
 
+export async function getAllTags () {
+  const resp = await axios.get('http://localhost:8000/tags')
+  return resp.data
+}
+
 export async function getQuestionText (qid) {
   const resp = await axios.get(`http://localhost:8000/questions/${qid}`)
   return resp.data.text
 }
+
+// export function getQuestionTitle (qid) {
+//   return axios.get(`http://localhost:8000/questions/${qid}`).then((response) => {
+//     console.log(response.data.title)
+//     return response.data.title
+//   }).catch((e) => {
+//     console.error(e)
+//   })
+// }
+
+// export function getQuestionText (qid) {
+//   return axios.get(`http://localhost:8000/questions/${qid}`).then((response) => {
+//     console.log(response.data.text)
+//     return response.data.text
+//   }).catch((e) => {
+//     console.error(e)
+//   })
+// }
+
+// export function getAllTags () {
+//   return axios.get('http://localhost:8000/tags').then((response) => {
+//     console.log(response.data)
+//     return response.data
+//   }).catch((e) => {
+//     console.error(e)
+//   })
+// }
 
 export async function getAnswerCount (qid) {
   const resp = await axios.get(`http://localhost:8000/questions/${qid}`)
