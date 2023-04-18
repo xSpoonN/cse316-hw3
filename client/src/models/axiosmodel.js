@@ -15,6 +15,11 @@ export async function getTagName (tagId) {
   }) */
 }
 
+export async function getQuestionTitle (qid) {
+  const resp = await axios.get(`http://localhost:8000/questions/${qid}`)
+  return resp.data.title
+}
+
 export async function getQuestionText (qid) {
   const resp = await axios.get(`http://localhost:8000/questions/${qid}`)
   return resp.data.text
