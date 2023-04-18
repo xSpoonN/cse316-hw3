@@ -73,11 +73,21 @@ export async function getAnswerCount (qid) {
   }) */
 }
 
+export async function getAnswerFromId (aid) {
+  const resp = await axios.get(`http://localhost:8000/answers/${aid}`)
+  return resp.data
+}
+
 export async function getAnswersByQID (qid) {
   const resp = await axios.get(`http://localhost:8000/questions/${qid}`)
   // console.log(resp.data)
   // console.log(resp.data.answers)
-  return resp.data.answers
+  console.log(resp)
+  const answers = await Promise.all(resp.data.answers.map(async (r) => {
+    const ans = await getAnswerFromId(r)
+    return ans
+  }))
+  return answers
   /* return axios.get(`http://localhost:8000/questions/${qid}`).then((response) => {
     console.log(response.data.answers.length)
     return response.data.answers.length
@@ -157,6 +167,7 @@ export function addQuestion (title, text, tags, user) {
 }
 
 export function formatDate (askDate, now = new Date()) {
+  console.log(askDate)
   const timeDiffInSeconds = (now.getTime() - askDate.getTime()) / 1000
   const timeDiffInMinutes = timeDiffInSeconds / 60
   const timeDiffInHours = timeDiffInMinutes / 60

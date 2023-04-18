@@ -132,6 +132,16 @@ app.get('/answers', async (req, res) => {
   }
 })
 
+app.get('/answers/:answerId', async (req, res) => {
+  console.log('Answer/:answerId GET request received')
+  try {
+    const answer = await Answers.findById(req.params.answerId)
+    res.json(answer)
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+})
+
 // app.get('/answers', async (req, res) => {
 //   try {
 //     const answers = await Answers.find()

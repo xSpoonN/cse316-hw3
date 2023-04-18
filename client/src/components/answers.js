@@ -95,7 +95,7 @@ export function Answer ({ answer }) {
         <td className="aTd aCred">
           <b>{answer.ans_by}</b> answered
           <br />
-          {modle.formatDate(answer.ans_date_time)}
+          {modle.formatDate(new Date(answer.ans_date_time))}
         </td>
       </tr>
     </>
