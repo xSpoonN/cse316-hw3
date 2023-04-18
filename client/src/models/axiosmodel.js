@@ -4,6 +4,10 @@ export function addViews (qid) {
   axios.post(`http://localhost:8000/questions/${qid}/views`)
 }
 
+export function getViews (qid) {
+  return axios.get(`http://localhost:8000/questions/${qid}`)
+}
+
 export async function getTagName (tagId) {
   const resp = await axios.get(`http://localhost:8000/tags/${tagId}`)
   return resp.data.name
@@ -84,6 +88,15 @@ export async function getAnswersByQID (qid) {
 
 export function getQuestions () {
   return axios.get('http://localhost:8000/questions').then((response) => {
+    console.log(response.data)
+    return response.data
+  }).catch((e) => {
+    console.error(e)
+  })
+}
+
+export function getQuestion (qid) {
+  return axios.get(`http://localhost:8000/questions/${qid}`).then((response) => {
     console.log(response.data)
     return response.data
   }).catch((e) => {

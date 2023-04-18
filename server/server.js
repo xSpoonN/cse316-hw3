@@ -68,6 +68,7 @@ app.post('/questions/:qid/views', async (req, res) => {
 })
 
 app.get('/questions/:questionId', async (req, res) => {
+  console.log('Question/:questionId GET request received')
   try {
     const question = await Questions.findById(req.params.questionId)
     res.json(question)
