@@ -9,6 +9,7 @@ const Tags = require('./models/tags')
 
 // Create a new Express app
 const app = express()
+app.use(express.json())
 
 app.use(function (req, res, next) {
   res.header('Access-Control-Allow-Origin', 'http://localhost:3000')
@@ -34,17 +35,20 @@ app.get('/questions', async (req, res) => {
 })
 
 app.post('/questions', async (req, res) => {
+  console.log('Question POST request received')
   const question = new Questions({
     title: req.body.title,
-    body: req.body.text,
+    text: req.body.text,
     tags: req.body.tags,
     asked_by: req.body.user,
-    ask_date_time: Date.now
+    ask_date_time: Date.now()
   })
+  console.log(question)
   try {
     const newQuestion = await question.save()
     res.status(201).json(newQuestion)
   } catch (err) {
+    console.log(err)
     res.status(400).json({ message: err.message })
   }
 })
@@ -73,24 +77,40 @@ app.get('/questions/:questionId', async (req, res) => {
 })
 
 app.get('/tags/:tagId', async (req, res) => {
+  console.log('Tag/:tagId GET request received')
   try {
     const tag = await Tags.findById(req.params.tagId)
     res.json(tag)
   } catch (err) {
+    console.log(err)
+    res.status(500).json({ message: err.message })
+  }
+})
+
+app.get('/tagNames/:tagName', async (req, res) => {
+  console.log('Tag/:tagName GET request received')
+  try {
+    const tag = await Tags.find({ name: req.params.tagName })
+    res.json(tag)
+  } catch (err) {
+    console.log(err)
     res.status(500).json({ message: err.message })
   }
 })
 
 app.get('/tags', async (req, res) => {
+  console.log('Tag GET request received')
   try {
     const tags = await Tags.find()
     res.json(tags)
   } catch (err) {
+    console.log(err)
     res.status(500).json({ message: err.message })
   }
 })
 
 app.post('/tags', async (req, res) => {
+  console.log('Tag POST request received')
   const tag = new Tags({
     name: req.body.name
   })

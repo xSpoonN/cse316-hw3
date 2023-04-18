@@ -43,13 +43,22 @@ export default function QuestionForm ({ setActivePage }) {
   const handleTagsChange = (event) => { setTags(event.target.value) }
   const handleUserChange = (event) => { setUser(event.target.value) }
 
-  function handleSubmit (event) {
+  async function handleSubmit (event) {
     event.preventDefault()
 
     if (checkQuestionForm()) {
       const tagsList = tags.split(' ')
-      const tagIds = [...new Set(tagsList.map((tag) => modle.tagExists(tag.toLowerCase()) || modle.addTag(tag.toLowerCase())))]
-      modle.addQuestion(title, text, tagIds, user)
+      const tagIds = await Promise.all(tagsList.map(async (tag) => {
+        const tagExists = await modle.tagExists(tag.toLowerCase())
+        console.log(tagExists)
+        if (tagExists.length) {
+          return tagExists[0]._id
+        } else {
+          return modle.addTag(tag.toLowerCase())
+        }
+      }))
+
+      await modle.addQuestion(title, text, tagIds, user)
       setActivePage('Questions')
     }
   }

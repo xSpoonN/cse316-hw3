@@ -109,8 +109,8 @@ export function getTags () {
   })
 }
 
-export function tagExists (tag) {
-  return axios.get(`http://localhost:8000/tags/${tag}`).then((response) => {
+export function tagExists (tagName) {
+  return axios.get(`http://localhost:8000/tagNames/${tagName}`).then((response) => {
     console.log(response.data)
     return response.data
   }).catch((e) => {
