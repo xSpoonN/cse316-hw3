@@ -165,8 +165,8 @@ export default function Questions ({ searchQuery, fun }) {
     <div>
       <p id="questioncount">
         {`${(qCount - 1) === 1
-          ? (qCount - 1) + ' question'
-          : !(qCount - 1) ? 'No Questions Found.' : (qCount - 1) + ' questions'
+          ? '1 question'
+          : (qCount - 1) <= 0 ? 'No Questions Found.' : (qCount - 1) + ' questions'
           }`}
       </p>
       <button id="newbutt" className="questionsort" onClick={() => setSortOrder('Newest')}>Newest</button>

@@ -49,6 +49,20 @@ app.post('/questions', async (req, res) => {
   }
 })
 
+app.post('/questions/:qid/views', async (req, res) => {
+  // find question whose _id matches qid
+  const question = await Questions.findById(req.params._id)
+  // increment views by 1
+  question.views += 1
+  // save the updated question
+  try {
+    const newQuestion = await question.save()
+    res.status(201).json(newQuestion)
+  } catch (err) {
+    res.status(400).json({ message: err.message })
+  }
+})
+
 app.get('/questions/:questionId', async (req, res) => {
   try {
     const question = await Questions.findById(req.params.questionId)

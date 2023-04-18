@@ -1,5 +1,9 @@
 import axios from 'axios'
 
+export function addViews (qid) {
+  axios.post(`http://localhost:8000/questions/${qid}/views`)
+}
+
 export async function getTagName (tagId) {
   const resp = await axios.get(`http://localhost:8000/tags/${tagId}`)
   return resp.data.name
@@ -9,6 +13,11 @@ export async function getTagName (tagId) {
   }).catch((e) => {
     console.error(e)
   }) */
+}
+
+export async function getQuestionText (qid) {
+  const resp = await axios.get(`http://localhost:8000/questions/${qid}`)
+  return resp.data.text
 }
 
 export async function getAnswerCount (qid) {

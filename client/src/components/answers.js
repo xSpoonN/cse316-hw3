@@ -29,7 +29,7 @@ export default async function Answers ({ qid, gotoPostAnswerPage }) {
 
   modle.addViews(qid)
 
-  const textWithLinks = replaceLinks(modle.getQuestionText(qid))
+  const textWithLinks = replaceLinks(await modle.getQuestionText(qid))
 
   return (
     <>
