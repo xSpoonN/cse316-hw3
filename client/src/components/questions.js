@@ -136,7 +136,7 @@ export default function Questions ({ searchQuery, fun }) {
     let aLatest = 0
     let bLatest = 0
     const ans = await modle.getAnswers()
-    console.log(ans)
+    /* console.log(ans) */
     for (let i = 0; i < a.answers.length; i++) { // Finds the latest answer
       const answe = ans.find((x) => x._id === a.answers[i])
       if (!aLatest || new Date(answe.ans_date_time) > aLatest) aLatest = new Date(answe.ans_date_time)

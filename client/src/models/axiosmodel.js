@@ -41,7 +41,7 @@ export async function getAnswersByQID (qid) {
 
 export function getQuestions () {
   return axios.get('http://localhost:8000/questions').then((response) => {
-    console.log(response.data)
+    /* console.log(response.data) */
     return response.data
   }).catch((e) => {
     console.error(e)
@@ -59,7 +59,7 @@ export function getQuestion (qid) {
 
 export function getAnswers () {
   return axios.get('http://localhost:8000/answers').then((response) => {
-    console.log(response.data)
+    /* console.log(response.data) */
     return response.data
   }).catch((e) => {
     console.error(e)
