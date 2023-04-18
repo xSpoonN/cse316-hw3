@@ -99,7 +99,7 @@ export default function Questions ({ searchQuery, fun }) {
       if (!qList) qList = await modle.getQuestions()
       /* console.log(qList) */
       /* Sort Options */
-      if (searchQuery) qList = search(searchQuery)
+      if (searchQuery) qList = await search(searchQuery)
       if (sortOrder === 'Newest' || sortOrder === 'Unanswered') {
         qList = qList.sort((a, b) => (new Date(b.ask_date_time) > new Date(a.ask_date_time)) ? -1 : 1); qList.reverse()
       } else if (sortOrder === 'Active') {
