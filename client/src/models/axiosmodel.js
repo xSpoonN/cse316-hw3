@@ -167,7 +167,6 @@ export function addQuestion (title, text, tags, user) {
 }
 
 export function formatDate (askDate, now = new Date()) {
-  console.log(askDate)
   const timeDiffInSeconds = (now.getTime() - askDate.getTime()) / 1000
   const timeDiffInMinutes = timeDiffInSeconds / 60
   const timeDiffInHours = timeDiffInMinutes / 60

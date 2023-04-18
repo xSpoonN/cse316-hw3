@@ -36,14 +36,14 @@ export default function Answers ({ qid, gotoPostAnswerPage }) {
   return (
     <>
       <p id="ap_answercount">
-        <b>{questionData.answerCount} answers</b>
+        <b>{questionData.answers.length} answers</b>
       </p>
       <p id="ap_questiontitle">
         <b>{questionData.title}</b>
       </p>
       <br />
       <p id="ap_views">
-        <b>{questionData.views} views</b>
+        <b>{questionData.views + 1} views</b>
       </p>
       <p
         id="ap_questiontext"
