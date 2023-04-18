@@ -12,19 +12,6 @@ export function validateLinks (text) {
   }
 
   return null
-  /* const matches = text.match(/\[(.+?)\]\((.*)\)/g)
-  if (matches) {
-    matches.forEach(match => {
-      const linkMatches = match.match(/\[(.+?)\]\((.*)\)/)
-      if (linkMatches) {
-        const [full, , linkUrl] = linkMatches
-        if (!linkUrl.startsWith('http://') && !linkUrl.startsWith('https://')) {
-          return full
-        }
-      }
-    })
-  }
-  return null */
 }
 
 export default function QuestionForm ({ setActivePage }) {
@@ -51,11 +38,7 @@ export default function QuestionForm ({ setActivePage }) {
       const tagIds = await Promise.all(tagsList.map(async (tag) => {
         const tagExists = await modle.tagExists(tag.toLowerCase())
         console.log(tagExists)
-        if (tagExists.length) {
-          return tagExists[0]._id
-        } else {
-          return modle.addTag(tag.toLowerCase())
-        }
+        return (tagExists.length) ? tagExists[0]._id : modle.addTag(tag.toLowerCase())
       }))
 
       await modle.addQuestion(title, text, tagIds, user)

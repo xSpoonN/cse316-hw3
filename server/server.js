@@ -20,7 +20,6 @@ app.use(function (req, res, next) {
   next()
 })
 
-// Set up a route for the root URL
 app.get('/', (req, res) => {
   res.send('Hello, world!')
 })
@@ -54,11 +53,8 @@ app.post('/questions', async (req, res) => {
 })
 
 app.post('/questions/:qid/views', async (req, res) => {
-  // find question whose _id matches qid
   const question = await Questions.findById(req.params.qid)
-  // increment views by 1
   question.views += 1
-  // save the updated question
   try {
     const newQuestion = await question.save()
     res.status(201).json(newQuestion)
@@ -142,29 +138,10 @@ app.get('/answers/:answerId', async (req, res) => {
   }
 })
 
-// app.get('/answers', async (req, res) => {
-//   try {
-//     const answers = await Answers.find()
-//     res.json(answers)
-//   } catch (err) {
-//     res.status(500).json({ message: err.message })
-//   }
-// })
-
 // Connect to the database
 mongoose.connect('mongodb://127.0.0.1:27017/fake_so')
 const db = mongoose.connection
 db.on('error', console.error.bind(console, 'MongoDB connection error:'))
-/* db.on('connected', function () {
-  const ansSchema = AnswerSchema()
-  ansSchema.save(function (err, result) {
-    if (err) {
-      console.log('Could not save new book : ' + err)
-      return
-    }
-    console.log('Created new book : ' + result)
-  })
-}) */
 
 // Start the server and listen on port 8000
 /* const server =  */app.listen(8000, () => {

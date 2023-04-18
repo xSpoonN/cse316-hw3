@@ -5,11 +5,7 @@ const modle = require('../models/axiosmodel.js')
 function replaceLinks (text) {
   if (!text) return ''
   return text.replace(/\[(.*?)\]\((.*?)\)/g, (full, name, link) => {
-    if (link.match(/^https?:\/\//)) {
-      return `<a href='${link}'>${name}</a>`
-    } else {
-      return full
-    }
+    return (link.match(/^https?:\/\//)) ? `<a href='${link}'>${name}</a>` : full
   })
 }
 
@@ -27,28 +23,17 @@ export default function Answers ({ qid, gotoPostAnswerPage }) {
     fetchData()
   }, [qid])
 
-  if (!questionData) {
-    return <p>Loading...</p>
-  }
+  if (!questionData) return <p>Loading...</p>
 
   const textWithLinks = replaceLinks(questionData.text)
 
   return (
     <>
-      <p id="ap_answercount">
-        <b>{questionData.answers.length} answers</b>
-      </p>
-      <p id="ap_questiontitle">
-        <b>{questionData.title}</b>
-      </p>
+      <p id="ap_answercount"><b>{questionData.answers.length} answers</b></p>
+      <p id="ap_questiontitle"><b>{questionData.title}</b></p>
       <br />
-      <p id="ap_views">
-        <b>{questionData.views + 1} views</b>
-      </p>
-      <p
-        id="ap_questiontext"
-        dangerouslySetInnerHTML={{ __html: textWithLinks }}
-      />
+      <p id="ap_views"><b>{questionData.views + 1} views</b></p>
+      <p id="ap_questiontext" dangerouslySetInnerHTML={{ __html: textWithLinks }}/>
       <p id="ap_askedby">
         <b>{questionData.asked_by}</b> asked<br />
         {modle.formatDate(new Date(questionData.ask_date_time))}
@@ -66,18 +51,11 @@ export default function Answers ({ qid, gotoPostAnswerPage }) {
         </tbody>
       </table>
       <br />
-      {answers.length === 0 && (
-        <p id="ap_noanswers">
-          <i>No Answers Yet...</i>
-        </p>
-      )}
-      <button id="ap_answerbutton" onClick={gotoPostAnswerPage}>
-        Answer Question
-      </button>
+      {answers.length === 0 && (<p id="ap_noanswers"><i>No Answers Yet...</i></p>)}
+      <button id="ap_answerbutton" onClick={gotoPostAnswerPage}>Answer Question</button>
     </>
   )
 }
-
 Answers.propTypes = {
   qid: PropTypes.string.isRequired,
   gotoPostAnswerPage: PropTypes.func.isRequired
@@ -88,10 +66,7 @@ export function Answer ({ answer }) {
   return (
     <>
       <tr className="aRow">
-        <td
-          className="aTD aAns"
-          dangerouslySetInnerHTML={{ __html: textWithLinks }}
-        />
+        <td className="aTD aAns" dangerouslySetInnerHTML={{ __html: textWithLinks }}/>
         <td className="aTd aCred">
           <b>{answer.ans_by}</b> answered
           <br />
@@ -101,7 +76,6 @@ export function Answer ({ answer }) {
     </>
   )
 }
-
 Answer.propTypes = {
   answer: PropTypes.object.isRequired
 }

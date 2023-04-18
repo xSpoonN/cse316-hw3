@@ -11,17 +11,6 @@ export function getViews (qid) {
 export async function getTagName (tagId) {
   const resp = await axios.get(`http://localhost:8000/tags/${tagId}`)
   return resp.data.name
-  /* return axios.get(`http://localhost:8000/tags/${tagId}`).then((response) => {
-    console.log(response.data.name)
-    return response.data
-  }).catch((e) => {
-    console.error(e)
-  }) */
-}
-
-export async function getQuestionTitle (qid) {
-  const resp = await axios.get(`http://localhost:8000/questions/${qid}`)
-  return resp.data.title
 }
 
 export async function getAllTags () {
@@ -29,48 +18,10 @@ export async function getAllTags () {
   return resp.data
 }
 
-export async function getQuestionText (qid) {
-  const resp = await axios.get(`http://localhost:8000/questions/${qid}`)
-  return resp.data.text
-}
-
-// export function getQuestionTitle (qid) {
-//   return axios.get(`http://localhost:8000/questions/${qid}`).then((response) => {
-//     console.log(response.data.title)
-//     return response.data.title
-//   }).catch((e) => {
-//     console.error(e)
-//   })
-// }
-
-// export function getQuestionText (qid) {
-//   return axios.get(`http://localhost:8000/questions/${qid}`).then((response) => {
-//     console.log(response.data.text)
-//     return response.data.text
-//   }).catch((e) => {
-//     console.error(e)
-//   })
-// }
-
-// export function getAllTags () {
-//   return axios.get('http://localhost:8000/tags').then((response) => {
-//     console.log(response.data)
-//     return response.data
-//   }).catch((e) => {
-//     console.error(e)
-//   })
-// }
-
 export async function getAnswerCount (qid) {
   const resp = await axios.get(`http://localhost:8000/questions/${qid}`)
   console.log(resp.data.answers.length)
   return resp.data.answers.length
-  /* return axios.get(`http://localhost:8000/questions/${qid}`).then((response) => {
-    console.log(response.data.answers.length)
-    return response.data.answers.length
-  }).catch((e) => {
-    console.error(e)
-  }) */
 }
 
 export async function getAnswerFromId (aid) {
@@ -80,20 +31,12 @@ export async function getAnswerFromId (aid) {
 
 export async function getAnswersByQID (qid) {
   const resp = await axios.get(`http://localhost:8000/questions/${qid}`)
-  // console.log(resp.data)
-  // console.log(resp.data.answers)
   console.log(resp)
   const answers = await Promise.all(resp.data.answers.map(async (r) => {
     const ans = await getAnswerFromId(r)
     return ans
   }))
   return answers
-  /* return axios.get(`http://localhost:8000/questions/${qid}`).then((response) => {
-    console.log(response.data.answers.length)
-    return response.data.answers.length
-  }).catch((e) => {
-    console.error(e)
-  }) */
 }
 
 export function getQuestions () {

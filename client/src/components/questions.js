@@ -3,8 +3,6 @@ import PropTypes from 'prop-types'
 import '../stylesheets/questions.css'
 import '../stylesheets/fakeStackOverflow.css'
 const modle = require('../models/axiosmodel.js')
-/* import { showAnswers } from './answers.js' */
-/* import { addTagLink } from './alltags.js' */
 
 export function Question ({ qid, answers, views, title, tagList, askedBy, date, unans, setActivePage }) {
   const [tagNames, setTagNames] = useState([])
@@ -23,7 +21,6 @@ export function Question ({ qid, answers, views, title, tagList, askedBy, date, 
     fetchTagNames()
   }, [tagList])
 
-  // potentially, setPage(qid), qid is a promise.
   if (unans && answers) return undefined
   return (
     <tr className="qRow">
@@ -33,15 +30,9 @@ export function Question ({ qid, answers, views, title, tagList, askedBy, date, 
       </td>
 
       <td className="qTD">
-        <a className="qlink" onClick={ setPage(qid) }>
-          {title}
-        </a>
+        <a className="qlink" onClick={ setPage(qid) }>{title}</a>
         <br/>
-        {tagNames.map((name, i) => (
-          <button key={tagList[i]} className="qtag">
-            {name}
-          </button>
-        ))}
+        {tagNames.map((name, i) => (<button key={tagList[i]} className="qtag">{name}</button>))}
       </td>
 
       <td className="qTD"><b>{askedBy}</b> {`asked ${modle.formatDate(date)}`}</td>
@@ -71,7 +62,6 @@ export default function Questions ({ searchQuery, fun }) {
     let searchTerms = query.toLowerCase().split(' ')
     let changed = false
     do {
-      /* console.log(searchTerms) */ /* This separates all closely positioned tags. */
       changed = false
       for (const term of searchTerms) {
         const ind = term.indexOf('][')
@@ -106,7 +96,7 @@ export default function Questions ({ searchQuery, fun }) {
 
   useEffect(() => {
     async function fetchQuestions (qList) {
-      if (!qList) qList = await modle.getQuestions() // is this line causing the problem?
+      if (!qList) qList = await modle.getQuestions()
       /* console.log(qList) */
       /* Sort Options */
       if (searchQuery) qList = search(searchQuery)
@@ -119,7 +109,6 @@ export default function Questions ({ searchQuery, fun }) {
       // eslint-disable-next-line camelcase
       const qL = qList.map(({ _id, answers, views, title, tags, asked_by, ask_date_time }) => {
         if (sortOrder === 'Unanswered' && answers.length) return undefined
-        // it might be happening here!
         return (
           <Question
             qid={_id}
@@ -150,15 +139,11 @@ export default function Questions ({ searchQuery, fun }) {
     console.log(ans)
     for (let i = 0; i < a.answers.length; i++) { // Finds the latest answer
       const answe = ans.find((x) => x._id === a.answers[i])
-      if (!aLatest || new Date(answe.ans_date_time) > aLatest) {
-        aLatest = new Date(answe.ans_date_time)
-      }
+      if (!aLatest || new Date(answe.ans_date_time) > aLatest) aLatest = new Date(answe.ans_date_time)
     }
     for (let i = 0; i < b.answers.length; i++) { // Finds the latest answer
       const answe = ans.find((x) => x._id === b.answers[i])
-      if (!bLatest || new Date(answe.ans_date_time) > bLatest) {
-        bLatest = new Date(answe.ans_date_time)
-      }
+      if (!bLatest || new Date(answe.ans_date_time) > bLatest) bLatest = new Date(answe.ans_date_time)
     }
     return bLatest - aLatest
   }
@@ -176,9 +161,7 @@ export default function Questions ({ searchQuery, fun }) {
       <button id="unbutt" className="questionsort" onClick={() => setSortOrder('Unanswered')}>Unanswered</button>
       <br id="liststart"/>
       <table className="questions">
-        <tbody>
-          {questionList}
-        </tbody>
+        <tbody>{questionList}</tbody>
       </table>
     </div>
   )
