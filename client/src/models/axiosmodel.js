@@ -23,6 +23,19 @@ export async function getAnswerCount (qid) {
   }) */
 }
 
+export async function getAnswersByQID (qid) {
+  const resp = await axios.get(`http://localhost:8000/questions/${qid}`)
+  // console.log(resp.data)
+  // console.log(resp.data.answers)
+  return resp.data.answers
+  /* return axios.get(`http://localhost:8000/questions/${qid}`).then((response) => {
+    console.log(response.data.answers.length)
+    return response.data.answers.length
+  }).catch((e) => {
+    console.error(e)
+  }) */
+}
+
 export function getQuestions () {
   return axios.get('http://localhost:8000/questions').then((response) => {
     console.log(response.data)

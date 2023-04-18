@@ -49,7 +49,7 @@ app.post('/questions', async (req, res) => {
   }
 })
 
-app.get('/question/:questionId', async (req, res) => {
+app.get('/questions/:questionId', async (req, res) => {
   try {
     const question = await Questions.findById(req.params.questionId)
     res.json(question)
@@ -96,6 +96,15 @@ app.get('/answers', async (req, res) => {
     res.status(500).json({ message: err.message })
   }
 })
+
+// app.get('/answers', async (req, res) => {
+//   try {
+//     const answers = await Answers.find()
+//     res.json(answers)
+//   } catch (err) {
+//     res.status(500).json({ message: err.message })
+//   }
+// })
 
 // Connect to the database
 mongoose.connect('mongodb://127.0.0.1:27017/fake_so')

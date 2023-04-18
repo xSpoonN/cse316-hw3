@@ -2,21 +2,30 @@ import { React, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 const modle = require('../models/axiosmodel.js')
 
-export default function Answers ({ qid, gotoPostAnswerPage }) {
-  const [answerCount, setAnswerCount] = useState([])
+export default async function Answers ({ qid, gotoPostAnswerPage }) {
+  // const [answerCount, setAnswerCount] = useState([])
+  const [answers, setAnswers] = useState([])
 
   useEffect(() => {
     async function fetchAnswers () {
-      const ac = await modle.getAnswerCount(qid)
-      console.log(ac)
-      setAnswerCount(ac)
+      const a = await modle.getAnswers(qid)
+      console.log(a)
+      setAnswers(a)
     }
     fetchAnswers()
   }, [qid])
 
-  const answers = modle.getAnswersByQID(qid).map((item) => {
-    return <Answer key={item.aid} answer={item} />
-  })
+  // const answers = modle.getAnswersByQID(qid).map((item) => {
+  //   return <Answer key={item.aid} answer={item} />
+  // })
+  /* const answers = await modle.getAnswersByQID(qid).then((data) => {
+    console.log(data)
+    return data.map((item) => {
+      return <Answer key={item.aid} answer={item} />
+    })
+  }).catch((err) => {
+    console.log(err)
+  }) */
 
   modle.addViews(qid)
 
@@ -24,7 +33,7 @@ export default function Answers ({ qid, gotoPostAnswerPage }) {
 
   return (
     <>
-    <p id="ap_answercount"><b>{answerCount} answers</b></p>
+    <p id="ap_answercount"><b>{answers.length} answers</b></p>
     <p id="ap_questiontitle"><b>{modle.getQuestionTitle(qid)}</b></p>
     <br />
     <p id="ap_views"><b>{modle.getViews(qid)} views</b></p>
