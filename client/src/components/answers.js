@@ -15,10 +15,9 @@ export default function Answers ({ qid, gotoPostAnswerPage }) {
 
   useEffect(() => {
     async function fetchData () {
-      const question = await modle.getQuestion(qid)
-      setQuestionData(question)
+      setQuestionData(await modle.getQuestion(qid))
       setAnswers(await modle.getAnswersByQID(qid))
-      await modle.addViews(qid)
+      modle.addViews(qid)
     }
     fetchData()
   }, [qid])
