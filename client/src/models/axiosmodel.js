@@ -138,7 +138,7 @@ export async function addAnswer (qid, ans_by, text) {
 }
 
 export async function getQuestionCountByTagId (tagId) {
-  return await getQuestions().filter((q) => q.tags.includes(tagId)).length
+  return (await getQuestions()).filter((q) => q.tags.includes(tagId)).length
 }
 
 export function formatDate (askDate, now = new Date()) {
