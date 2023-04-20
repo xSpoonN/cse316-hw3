@@ -109,6 +109,10 @@ export function addQuestion (title, text, tags, user) {
   })
 }
 
+export async function getQuestionCountByTagId (tagId) {
+  return await getQuestions().filter((q) => q.tags.includes(tagId)).length
+}
+
 export function formatDate (askDate, now = new Date()) {
   const timeDiffInSeconds = (now.getTime() - askDate.getTime()) / 1000
   const timeDiffInMinutes = timeDiffInSeconds / 60
