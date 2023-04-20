@@ -14,11 +14,11 @@ export default function AnswerForm ({ setActivePage, qid }) {
   const handleUserChange = (event) => { setUser(event.target.value) }
   const handleTextChange = (event) => { setText(event.target.value) }
 
-  function handleSubmit (event) {
+  async function handleSubmit (event) {
     event.preventDefault()
 
     if (checkQuestionForm()) {
-      modle.addAnswer(qid, user, text)
+      await modle.addAnswer(qid, user, text)
       modle.addViews(qid, -1) // Ensure the view is not double-counted
       setActivePage('Answers')
     }
