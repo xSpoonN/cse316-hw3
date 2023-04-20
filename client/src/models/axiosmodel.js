@@ -118,14 +118,17 @@ export async function addAnswer (qid, ans_by, text) {
     text,
     ans_by // eslint-disable-line camelcase
   }).then((response) => {
-    console.log('New answer id ' + response.data._id)
-    newAnsId = response.data._id
+    console.log('New answer id ' + response.data)
+    newAnsId = response.data
   }).catch((e) => {
     console.error(e)
   })
 
   // Make sure we have an answer id
-  if (!newAnsId) return null
+  if (!newAnsId) {
+    console.log('No answer id')
+    return null
+  }
 
   // // Get the current answers and concat
   // const currentAnswers = await getAnswersByQID(qid)
@@ -134,6 +137,10 @@ export async function addAnswer (qid, ans_by, text) {
   // Update the question with the new answer
   axios.post(`http://localhost:8000/questions/${qid}/answers`, {
     aid: newAnsId
+  }).then((response) => {
+    console.log(response.data)
+  }).catch((e) => {
+    console.error(e)
   })
 }
 

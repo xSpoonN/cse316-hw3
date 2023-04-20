@@ -70,6 +70,7 @@ app.post('/answers', async (req, res) => {
 })
 
 app.post('/questions/:qid/views', async (req, res) => {
+  console.log('Answer VIEW POST request received')
   const question = await Questions.findById(req.params.qid)
   question.views += 1
   try {
@@ -81,8 +82,9 @@ app.post('/questions/:qid/views', async (req, res) => {
 })
 
 app.post('/questions/:qid/answers', async (req, res) => {
+  console.log('Question update answer POST request received')
   const question = await Questions.findById(req.params.qid)
-  question.answers.concat(req.body.aid)
+  question.answers.push(req.body.aid)
   try {
     const newQuestion = await question.save()
     res.status(201).json(newQuestion)
