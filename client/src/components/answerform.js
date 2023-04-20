@@ -18,7 +18,7 @@ export default function AnswerForm ({ setActivePage, qid }) {
     event.preventDefault()
 
     if (checkQuestionForm()) {
-      modle.addAnswer(qid, user, text, new Date())
+      modle.addAnswer(qid, user, text)
       modle.addViews(qid, -1) // Ensure the view is not double-counted
       setActivePage('Answers')
     }

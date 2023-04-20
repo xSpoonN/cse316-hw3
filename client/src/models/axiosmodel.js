@@ -109,6 +109,34 @@ export function addQuestion (title, text, tags, user) {
   })
 }
 
+// eslint-disable-next-line camelcase
+export async function addAnswer (qid, ans_by, text) {
+  let newAnsId = null
+
+  // Post a new answer
+  await axios.post('http://localhost:8000/answers', {
+    text,
+    ans_by // eslint-disable-line camelcase
+  }).then((response) => {
+    console.log('New answer id ' + response.data._id)
+    newAnsId = response.data._id
+  }).catch((e) => {
+    console.error(e)
+  })
+
+  // Make sure we have an answer id
+  if (!newAnsId) return null
+
+  // // Get the current answers and concat
+  // const currentAnswers = await getAnswersByQID(qid)
+  // currentAnswers.concat(newAnsId) // eslint-disable-line camelcase
+
+  // Update the question with the new answer
+  axios.post(`http://localhost:8000/questions/${qid}/answers`, {
+    aid: newAnsId
+  })
+}
+
 export async function getQuestionCountByTagId (tagId) {
   return await getQuestions().filter((q) => q.tags.includes(tagId)).length
 }

@@ -52,9 +52,37 @@ app.post('/questions', async (req, res) => {
   }
 })
 
+app.post('/answers', async (req, res) => {
+  console.log('Answer POST request received')
+  const answer = new Answers({
+    text: req.body.text,
+    ans_by: req.body.ans_by,
+    ans_date_time: Date.now()
+  })
+  console.log(answer)
+  try {
+    const newAnswer = await answer.save()
+    res.status(201).json(newAnswer._id)
+  } catch (err) {
+    console.log(err)
+    res.status(400).json({ message: err.message })
+  }
+})
+
 app.post('/questions/:qid/views', async (req, res) => {
   const question = await Questions.findById(req.params.qid)
   question.views += 1
+  try {
+    const newQuestion = await question.save()
+    res.status(201).json(newQuestion)
+  } catch (err) {
+    res.status(400).json({ message: err.message })
+  }
+})
+
+app.post('/questions/:qid/answers', async (req, res) => {
+  const question = await Questions.findById(req.params.qid)
+  question.answers.concat(req.body.aid)
   try {
     const newQuestion = await question.save()
     res.status(201).json(newQuestion)
