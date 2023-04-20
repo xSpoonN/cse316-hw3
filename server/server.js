@@ -81,6 +81,18 @@ app.post('/questions/:qid/views', async (req, res) => {
   }
 })
 
+app.post('/questions/:qid/removeviews', async (req, res) => {
+  console.log('Answer VIEW POST request received')
+  const question = await Questions.findById(req.params.qid)
+  question.views -= 1
+  try {
+    const newQuestion = await question.save()
+    res.status(201).json(newQuestion)
+  } catch (err) {
+    res.status(400).json({ message: err.message })
+  }
+})
+
 app.post('/questions/:qid/answers', async (req, res) => {
   console.log('Question update answer POST request received')
   const question = await Questions.findById(req.params.qid)
