@@ -15,11 +15,14 @@ export default function Answers ({ qid, gotoPostAnswerPage }) {
 
   useEffect(() => {
     async function fetchData () {
+      setAnswers((await modle.getAnswersByQID(qid)).sort((a, b) => {
+        return new Date(b.ans_date_time) - new Date(a.ans_date_time)
+      }))
       setQuestionData(await modle.getQuestion(qid))
       setAnswers((await modle.getAnswersByQID(qid)).sort((a, b) => {
         return new Date(b.ans_date_time) - new Date(a.ans_date_time)
       }))
-      setQuestionData(await modle.getQuestion(qid)) // im so sorry
+      setQuestionData(await modle.getQuestion(qid))
       modle.addViews(qid)
     }
     fetchData()
