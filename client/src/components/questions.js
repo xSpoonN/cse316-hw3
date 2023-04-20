@@ -25,8 +25,8 @@ export function Question ({ qid, answers, views, title, tagList, askedBy, date, 
   return (
     <tr className="qRow">
       <td className="qTD">
-        {answers} answers <br />
-        {views} views
+        {answers} answer{answers === 1 ? '' : 's'} <br />
+        {views} view{views === 1 ? '' : 's'}
       </td>
 
       <td className="qTD">

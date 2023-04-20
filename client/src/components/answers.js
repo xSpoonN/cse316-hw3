@@ -19,6 +19,7 @@ export default function Answers ({ qid, gotoPostAnswerPage }) {
       setAnswers((await modle.getAnswersByQID(qid)).sort((a, b) => {
         return new Date(b.ans_date_time) - new Date(a.ans_date_time)
       }))
+      setQuestionData(await modle.getQuestion(qid)) // im so sorry
       modle.addViews(qid)
     }
     fetchData()
@@ -30,10 +31,10 @@ export default function Answers ({ qid, gotoPostAnswerPage }) {
 
   return (
     <>
-      <p id="ap_answercount"><b>{questionData.answers.length} answers</b></p>
+      <p id="ap_answercount"><b>{questionData.answers.length} answer{questionData.answers.length === 1 ? '' : 's'}</b></p>
       <p id="ap_questiontitle"><b>{questionData.title}</b></p>
       <br />
-      <p id="ap_views"><b>{questionData.views + 1} views</b></p>
+      <p id="ap_views"><b>{questionData.views + 1} view{questionData.views ? 's' : ''}</b></p>
       <p id="ap_questiontext" dangerouslySetInnerHTML={{ __html: textWithLinks }}/>
       <p id="ap_askedby">
         <b>{questionData.asked_by}</b> asked<br />
