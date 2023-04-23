@@ -14,3 +14,5 @@ In the sections below, list and describe each contribution briefly.
 
 ## Team Member 2 Contribution
 ### James Leonardi - 113332225 - <james.leonardi@stonybrook.edu>
+> **Answer Page, Post a New Answer, All Tags Page, Filter by Tag** - Updated to work correctly with asynchronous functions and retrieves data from the server. Wrote related server code
+>
