@@ -6,5 +6,11 @@ Read homework specifications [here](https://docs.google.com/document/d/1V-zXNxnl
 In the sections below, list and describe each contribution briefly.
 
 ## Team Member 1 Contribution
+### Kevin Tao - 170154879 - <kevin.tao@stonybrook.edu>
+> **Home Page, Post a New Question, Search by Text/Tag** - Updated to work correctly with asynchronous functions and retrieves data from the server. Wrote related server code.
+>
+> **Database Schema** - Wrote the MongoDB schemas.
+> 
 
 ## Team Member 2 Contribution
+### James Leonardi - 113332225 - <james.leonardi@stonybrook.edu>
